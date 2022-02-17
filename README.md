@@ -1,7 +1,7 @@
 ### Hexlet tests and linter status:
 [![Actions Status](https://github.com/MoldavianDron/frontend-project-lvl2/workflows/hexlet-check/badge.svg)](https://github.com/MoldavianDron/frontend-project-lvl2/actions)
 
-### My tests and linter status:
+### My linter and tests status:
 [![linter-tests-run](https://github.com/MoldavianDron/frontend-project-lvl2/actions/workflows/linter-tests.yml/badge.svg)](https://github.com/MoldavianDron/frontend-project-lvl2/actions/workflows/linter-tests.yml)
 
 ### CodeClimate Maintainability:
