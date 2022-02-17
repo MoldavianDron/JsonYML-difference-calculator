@@ -1,12 +1,3 @@
-/* eslint-disable comma-dangle */
-/* eslint-disable semi */
-/* eslint-disable eol-last */
-/* eslint-disable no-shadow */
-/* eslint-disable no-unused-vars */
-/* eslint-disable no-trailing-spaces */
-/* eslint-disable quotes */
-/* eslint-disable quote-props */
-
 import _ from 'lodash';
 import path from 'path';
 import process from 'process';
@@ -24,16 +15,16 @@ const areValid = (path1, path2) => {
 
 const genDiff = (pathToFile1, pathToFile2) => {
   if (!areValid(pathToFile1, pathToFile2)) {
-    return new Error('File extension must be .json or .yml')
+    return new Error('File extension must be .json or .yml');
   }
 
   const fullPath1 = path.resolve(process.cwd(), pathToFile1);
   const fullPath2 = path.resolve(process.cwd(), pathToFile2);
 
-  const obj1 = JSON.parse(fs.readFileSync(fullPath1));
-  const obj2 = JSON.parse(fs.readFileSync(fullPath2));
+  const obj1 = JSON.parse(fs.readFileSync(fullPath1, 'utf-8'));
+  const obj2 = JSON.parse(fs.readFileSync(fullPath2, 'utf-8'));
   const mergedObj = { ...obj1, ...obj2 };
-  
+
   return diffStringify(obj1, obj2, mergedObj);
 };
 
