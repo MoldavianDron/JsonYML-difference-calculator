@@ -6,6 +6,9 @@ extends:
 parserOptions:
   ecmaVersion: latest
   sourceType: module
+overrides:
+  - files: "*.test.js" 
+    env: { "jest": true }
 rules:
   no-console: 0
   indent: ["warn", 2]
@@ -14,4 +17,4 @@ rules:
     - error
     - ignorePackages
     - js: always
-  no-underscore_dangle: ["error" { "allow": ["__filename", "__dirname"] }]
+  no-underscore-dangle: [2, {"allow": ["__filename", "__dirname"]}]

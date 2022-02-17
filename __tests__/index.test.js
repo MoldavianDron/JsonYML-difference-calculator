@@ -14,4 +14,4 @@ test('two plain jsons test', () => {
   const expectedResult = fs.readFileSync(getFixturePath('expected_result'), 'utf-8');
   const result = genDiff(file1Path, file2Path);
   expect(result).toEqual(expectedResult);
-})
+});
