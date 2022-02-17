@@ -8,8 +8,8 @@ on:
       - '**'
 
 jobs:
-  linter-check:
-    name: Linter check
+  linter-tests-check:
+    name: Linter and Tests check
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
