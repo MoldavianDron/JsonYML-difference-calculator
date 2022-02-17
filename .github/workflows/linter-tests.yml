@@ -1,4 +1,4 @@
-name: linter-run
+name: linter-tests-run
 
 on: 
   push:
