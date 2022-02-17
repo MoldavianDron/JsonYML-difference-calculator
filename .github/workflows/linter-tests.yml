@@ -1,0 +1,24 @@
+name: linter-run
+
+on: 
+  push:
+    branches:
+      - '**'
+    tags:
+      - '**'
+
+jobs:
+  linter-check:
+    name: Linter check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: npm install
+        run: make install
+
+      - name: Run a linter
+        run: make lint
+
+      - name: Run tests
+        run: make test
