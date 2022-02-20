@@ -1,4 +1,4 @@
-import { getValueType } from './diffAST.js';
+import getValueType from '../src/getValueType.js';
 
 const getFormat = (keyType) => {
   if (keyType === 'nested' || keyType === 'unchanged') {
@@ -14,7 +14,7 @@ const makeNodeFromKey = (key, value) => ({
   key, keyType: 'unchanged', value, valueType: getValueType(value),
 });
 
-const formatAST = (AST, sep = ' ', spacesCount = 1) => {
+const stylishAST = (AST, sep = ' ', spacesCount = 1) => {
   const iter = (nodeValue, depth, valueType) => {
     const indentSize = depth * spacesCount;
     const indent = sep.repeat(indentSize);
@@ -37,4 +37,4 @@ const formatAST = (AST, sep = ' ', spacesCount = 1) => {
   return iter(AST.value, 1, AST.valueType);
 };
 
-export default formatAST;
+export default stylishAST;

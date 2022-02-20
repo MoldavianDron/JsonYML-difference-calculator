@@ -1,11 +1,5 @@
 import _ from 'lodash';
-
-const getValueType = (value) => {
-  if (_.isObject(value)) {
-    return 'nested';
-  }
-  return 'simple';
-};
+import getValueType from './getValueType.js';
 
 const diffAST = (object1, object2) => {
   const makeNodes = (obj1, obj2) => {
@@ -50,4 +44,3 @@ const diffAST = (object1, object2) => {
   };
 };
 export default diffAST;
-export { getValueType };
