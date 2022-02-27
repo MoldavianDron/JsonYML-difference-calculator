@@ -12,7 +12,7 @@ const diff = (fileObj1, fileObj2) => {
     if (_.has(fileObj1, key)) return { name: key, type: 'deleted', value: fileObj1[key] };
     return { name: key, type: 'added', value: fileObj2[key] };
   };
-  const keys = Object.keys({ ...fileObj1, ...fileObj2 }).sort();
+  const keys = _.sortBy(Object.keys({ ...fileObj1, ...fileObj2 }));
   return keys.map((key) => makeNode(key));
 };
 
