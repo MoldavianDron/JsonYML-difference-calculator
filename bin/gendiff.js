@@ -19,7 +19,8 @@ program
 program
   .action(() => {
     const [path1, path2] = program.args;
-    console.log(genDiff(path1, path2));
+    const option = program.opts();
+    console.log(genDiff(path1, path2, option.format));
   });
 
 program.parse();
