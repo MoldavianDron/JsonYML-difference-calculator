@@ -1,40 +1,52 @@
-import getValueType from '../src/getValueType.js';
+import _ from 'lodash';
 
-const getFormat = (keyType) => {
-  if (keyType === 'nested' || keyType === 'unchanged') {
-    return '   ';
-  }
-  if (keyType === 'changed before' || keyType === 'deleted') {
-    return ' - ';
-  }
-  return ' + ';
+const getFormat = (nodeType = 'unchanged') => {
+  if (nodeType === 'deleted') return '  - ';
+  if (nodeType === 'added') return '  + ';
+  return '    ';
 };
 
-const makeNodeFromKey = (key, value) => ({
-  key, keyType: 'unchanged', value, valueType: getValueType(value),
-});
-
-const stylishAST = (AST, sep = ' ', spacesCount = 1) => {
-  const iter = (nodeValue, depth, valueType) => {
-    const indentSize = depth * spacesCount;
-    const indent = sep.repeat(indentSize);
-    const additionalIndent = ('   ').repeat(indentSize - 1);
-    const closedBracketIndent = sep.repeat(indentSize - 1);
-    if (valueType === 'simple') {
-      return `${nodeValue}`;
+const stylish = (AST, sep = ' ', repeats = 4) => {
+  const stringify = (value, depth) => {
+    if (!_.isObject(value)) {
+      return `${value}`;
     }
-    const children = valueType === 'nested' ? (
-      Object.keys(nodeValue).map((keyEl) => makeNodeFromKey(keyEl, nodeValue[keyEl]))
-    ) : nodeValue;
-    const lines = children.flatMap((child) => `${indent}${additionalIndent}${getFormat(child.keyType)}${child.key}: ${iter(child.value, depth + 1, child.valueType)}`);
+    const indentNumber = repeats * (depth - 1);
+    const indent = sep.repeat(indentNumber);
+
     return [
       '{',
-      ...lines,
-      `${closedBracketIndent}${additionalIndent}}`,
+      ...Object.keys(value).map((key) => `${indent}${getFormat()}${key}: ${stringify(value[key], depth + 1)}`),
+      `${indent}}`,
     ].join('\n');
   };
 
-  return iter(AST.value, 1, AST.valueType);
+  const makeStylish = (node, depth) => {
+    const indentNumber = repeats * (depth - 1);
+    const indent = sep.repeat(indentNumber);
+    if (node.type !== 'nested' && node.type !== 'updated') {
+      return `${indent}${getFormat(node.type)}${node.name}: ${stringify(node.value, depth + 1)}`;
+    }
+    if (node.type === 'updated') {
+      const [valueBeforUpdate, valueAfterUpdate] = node.value;
+      return [
+        `${indent}${getFormat('deleted')}${node.name}: ${stringify(valueBeforUpdate, depth + 1)}`,
+        `${indent}${getFormat('added')}${node.name}: ${stringify(valueAfterUpdate, depth + 1)}`,
+      ].join('\n');
+    }
+
+    return [
+      `${indent}${getFormat(node.type)}${node.name}: {`,
+      ...node.children.map((child) => makeStylish(child, depth + 1)),
+      `${indent}${sep.repeat(repeats)}}`,
+    ].join('\n');
+  };
+
+  return [
+    '{',
+    ...AST.map((node) => makeStylish(node, 1)),
+    '}',
+  ].join('\n');
 };
 
-export default stylishAST;
+export default stylish;

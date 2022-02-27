@@ -1,8 +1,8 @@
-import stylishAST from './stylish.js';
+import stylish from './stylish.js';
 
 const getFormatter = (format) => {
   if (format === 'stylish') {
-    return stylishAST;
+    return stylish;
   }
   return 'fix me';
 };
