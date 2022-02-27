@@ -48,6 +48,14 @@ test('two strcutured jsons plain format', () => {
   expect(result).toEqual(expectedResult);
 });
 
+test('two strcutured jsons json format', () => {
+  const file1Path = getFixturePath('file1_structured.yaml');
+  const file2Path = getFixturePath('file2_structured.json');
+  const expectedResult = fs.readFileSync(getFixturePath('expected_result_json.txt'), 'utf-8');
+  const result = genDiff(file1Path, file2Path, 'json');
+  expect(result).toEqual(expectedResult);
+});
+
 test('invalid file path', () => {
   const file1Path = 'musor';
   const file2Path = getFixturePath('file2.yml');

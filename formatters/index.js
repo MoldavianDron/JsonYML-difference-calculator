@@ -1,5 +1,6 @@
 import plain from './plain.js';
 import stylish from './stylish.js';
+import json from './json.js';
 
 const getFormatter = (format) => {
   if (format === 'stylish') {
@@ -8,7 +9,7 @@ const getFormatter = (format) => {
   if (format === 'plain') {
     return plain;
   }
-  return 'fix me';
+  return json;
 };
 
 export default getFormatter;
